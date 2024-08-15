@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorites</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #4787e7;
+        }
+
+        h2 {
+            color: #0f6bd3;
+        }
+
+        a {
+            color: #0f6bce;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        hr {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border: 0;
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Favorites</h1>
+    <hr>
+    <% if (movies.length === 0) { %>
+        <p><b>No movies in your Favorites currently.<br> Go find some movies!</b></p>
+    <% } else { %>
+        <ul>
+            <% movies.forEach((movie) => { %>
+                <li>
+                    <h2><%= movie.movieTitle %></h2>
+                    <p>Year: <%= movie.year %></p>
+                    <p>Cast: <%= movie.castStars %></p>
+                    <img src="<%= movie.cover %>" alt="Movie Cover Image">
+                </li>
+            <% }); %>
+        </ul>
+    <% } %>
+
+    <form action="/processRemove" method="post">
+        <label for="movieTitle">Enter movie title to remove:</label>
+        <input type="text" id="movieTitle" name="movieTitle">
+        <button type="submit" onclick="confirmSubmission()">Remove</button>
+    </form>
+
+    <br><br>
+    <hr>
+
+    <a href="/">RETURN TO HOME PAGE</a>
+</body>
+
+<script>
+    function confirmSubmission() {
+        // Get the port number from the URL
+        var portNumber = window.location.port;
+
+        // Create the confirmation message
+        var confirmationMessage = "Are you sure you want to remove this movie from your favorites?\n";
+
+        // Display the confirmation dialog box
+        var confirmed = confirm(confirmationMessage);
+
+        // If the user confirms, submit the form
+        if (confirmed) {
+            document.getElementById("applicationForm").submit();
+        } else {
+            // If the user cancels, do nothing
+        }
+    }
+</script>
+</html>
